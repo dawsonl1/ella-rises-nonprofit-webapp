@@ -16,6 +16,42 @@ A comprehensive web application for managing participants, events, donations, an
 
 ---
 
+## TA Grading Instructions
+
+### 1. Accessing the Deployed Site
+- Open a browser and go to: `https://team3-01.is404.net/`
+- Wait for the homepage to fully load before proceeding.
+
+### 2. Signing In as a Manager
+
+Use the following test manager account:
+- **Login URL:** `https://team3-01.is404.net/admin/login`  
+- **Role:** Manager  
+- **Email/Username:** `manager@ellarises.org`  
+- **Password:** `manager`
+
+Use the following test user account:
+- **Login URL:** `https://team3-01.is404.net/admin/login`  
+- **Role:** User  
+- **Email/Username:** `user@ellarises.org`  
+- **Password:** `user`
+
+
+> If the login page is not visible from the homepage, use the navigation menu and select **Login** or **Sign In**.
+
+### 3. What to Verify as a Manager
+
+When logged in as a manager, the TA should be able to:
+
+- **View manager dashboard** (e.g., overview of volunteers/events/requests).
+- **Access manager-only features**, such as:
+  - Creating or editing events/programs.
+  - Viewing and managing user/volunteer information.
+  - Any additional admin/manager tools implemented in this project.
+
+If you encounter login issues (e.g., invalid credentials, 500 errors), please note this in the grading comments.
+
+----
 ## Architecture Overview
 
 The application follows a **Model-View-Controller (MVC)** architecture with an **ETL pipeline** for data processing.
