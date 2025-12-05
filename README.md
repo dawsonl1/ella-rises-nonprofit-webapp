@@ -137,7 +137,7 @@ The application follows a **Model-View-Controller (MVC)** architecture with an *
 
 ### Accessing the Application
 
-The Ella Rises web application is deployed and accessible at: https://team3-01.is404.net/
+The Ella Rises web application is deployed and accessible at: `https://team3-01.is404.net/`
 
 Manager login: 
 Email: manager@ellaarises.com
@@ -151,18 +151,18 @@ Password: user
 
 ### Application Sections
 
-1. **Landing Page** - https://team3-01.is404.net/
+1. **Landing Page** - `https://team3-01.is404.net/`
    - Public marketing and informational site
    - No login required
 
-2. **Public Dashboard** - https://team3-01.is404.net/dashboard
+2. **Public Dashboard** - `https://team3-01.is404.net/dashboard`
    - Read-only data visualizations
    - No login required
 
-3. **Admin Panel** - https://team3-01.is404.net/admin
+3. **Admin Panel** - `https://team3-01.is404.net/admin`
    - Requires authentication
-   - Login page: https://team3-01.is404.net/admin/login
-   - Request access: https://team3-01.is404.net/admin/create
+   - Login page: `https://team3-01.is404.net/admin/login`
+   - Request access: `https://team3-01.is404.net/admin/create`
 
 ---
 
@@ -533,7 +533,7 @@ ella-arises-intex/
 ### For New Users
 
 1. **Request Access**
-   - Go to `https://[your-domain]/admin/create`
+   - Go to `https://team3-01.is404.net/admin/create`
    - Fill out the account request form with your email, name, and organization
    - Create a password
    - Submit your request
@@ -543,7 +543,7 @@ ella-arises-intex/
    - You'll receive notification once approved
 
 3. **Login**
-   - Go to `https://[your-domain]/admin/login`
+   - Go to `https://team3-01.is404.net/admin/login`
    - Enter your email and password
    - Click "Login"
 
