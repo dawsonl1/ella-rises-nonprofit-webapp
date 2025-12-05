@@ -67,14 +67,60 @@ async function downloadCSV(req, res) {
       return res.status(404).send('No data available');
     }
     
-    // Generate CSV header
-    const headers = Object.keys(surveys[0]).filter(key => key !== 'rowid');
-    let csv = headers.join(',') + '\n';
+    // Map lowercase database column names to PascalCase CSV headers expected by ETL
+    const columnMapping = {
+      participantemail: 'ParticipantEmail',
+      participantfirstname: 'ParticipantFirstName',
+      participantlastname: 'ParticipantLastName',
+      participantdob: 'ParticipantDOB',
+      participantrole: 'ParticipantRole',
+      participantphone: 'ParticipantPhone',
+      participantcity: 'ParticipantCity',
+      participantstate: 'ParticipantState',
+      participantzip: 'ParticipantZip',
+      participantschooloremployer: 'ParticipantSchoolOrEmployer',
+      participantfieldofinterest: 'ParticipantFieldOfInterest',
+      eventname: 'EventName',
+      eventtype: 'EventType',
+      eventdescription: 'EventDescription',
+      eventrecurrencepattern: 'EventRecurrencePattern',
+      eventdefaultcapacity: 'EventDefaultCapacity',
+      eventdatetimestart: 'EventDateTimeStart',
+      eventdatetimeend: 'EventDateTimeEnd',
+      eventlocation: 'EventLocation',
+      eventcapacity: 'EventCapacity',
+      eventregistrationdeadline: 'EventRegistrationDeadline',
+      registrationstatus: 'RegistrationStatus',
+      registrationattendedflag: 'RegistrationAttendedFlag',
+      registrationcheckintime: 'RegistrationCheckInTime',
+      registrationcreatedat: 'RegistrationCreatedAt',
+      surveysatisfactionscore: 'SurveySatisfactionScore',
+      surveyusefulnesscore: 'SurveyUsefulnessScore',
+      surveyinstructorscore: 'SurveyInstructorScore',
+      surveyrecommendationscore: 'SurveyRecommendationScore',
+      surveyoverallscore: 'SurveyOverallScore',
+      surveynpsbucket: 'SurveyNPSBucket',
+      surveycomments: 'SurveyComments',
+      surveysubmissiondate: 'SurveySubmissionDate',
+      milestonetitles: 'MilestoneTitles',
+      milestonedates: 'MilestoneDates',
+      donationhistory: 'DonationHistory',
+      totaldonations: 'TotalDonations',
+    };
     
-    // Generate CSV rows
+    // Get database column names (excluding rowid)
+    const dbColumns = Object.keys(surveys[0]).filter(key => key !== 'rowid');
+    
+    // Map to PascalCase headers for CSV
+    const csvHeaders = dbColumns.map(col => columnMapping[col] || col);
+    
+    // Generate CSV header row
+    let csv = csvHeaders.join(',') + '\n';
+    
+    // Generate CSV data rows
     surveys.forEach(survey => {
-      const row = headers.map(header => {
-        const value = survey[header] || '';
+      const row = dbColumns.map(dbCol => {
+        const value = survey[dbCol] || '';
         // Escape commas and quotes in values
         if (value.toString().includes(',') || value.toString().includes('"')) {
           return `"${value.toString().replace(/"/g, '""')}"`;

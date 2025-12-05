@@ -365,6 +365,11 @@
         text-align: left;
         white-space: nowrap;
       }
+      
+      table.requests-table td:last-child {
+        white-space: normal;
+        min-width: 200px;
+      }
 
       table.requests-table th {
         font-size: 12px;
@@ -441,7 +446,7 @@
         font-size: 14px;
         background: rgba(255, 255, 255, 0.9);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-        margin-right: 4px;
+        flex-shrink: 0;
       }
 
       .action-icon-btn--approve {
@@ -921,60 +926,61 @@
                     <% } %>
                   </td>
                   <td>
-                    <% const isPending = (r.status || 'pending').toLowerCase() === 'pending'; %>
-                    <% if (isPending) { %>
-                    <form
-                      method="POST"
-                      action="/admin/manager/<%= r.id %>/approve"
-                      style="display:inline-block; margin-right:4px;"
-                    >
-                      <button
-                        type="submit"
-                        class="action-icon-btn action-icon-btn--approve"
-                        title="Approve request"
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center;">
+                      <% const isPending = (r.status || 'pending').toLowerCase() === 'pending'; %>
+                      <% if (isPending) { %>
+                      <form
+                        method="POST"
+                        action="/admin/manager/<%= r.id %>/approve"
+                        style="display:inline-block;"
                       >
-                        ✓
-                      </button>
-                    </form>
-                    <form
-                      method="POST"
-                      action="/admin/manager/<%= r.id %>/reject"
-                      style="display:inline-block; margin-right:4px;"
-                    >
-                      <button
-                        type="submit"
-                        class="action-icon-btn action-icon-btn--reject"
-                        title="Reject request"
+                        <button
+                          type="submit"
+                          class="action-icon-btn action-icon-btn--approve"
+                          title="Approve request"
+                        >
+                          ✓
+                        </button>
+                      </form>
+                      <form
+                        method="POST"
+                        action="/admin/manager/<%= r.id %>/reject"
+                        style="display:inline-block;"
                       >
-                        ✕
+                        <button
+                          type="submit"
+                          class="action-icon-btn action-icon-btn--reject"
+                          title="Reject request"
+                        >
+                          ✕
+                        </button>
+                      </form>
+                      <% } %>
+                      <button
+                        type="button"
+                        class="edit-pill"
+                        data-edit-request-id="<%= r.id %>"
+                        data-edit-request-email="<%= r.email %>"
+                        data-edit-request-firstname="<%= r.first_name %>"
+                        data-edit-request-lastname="<%= r.last_name %>"
+                        data-edit-request-organization="<%= r.organization || '' %>"
+                        data-edit-request-message="<%= r.message || '' %>"
+                        data-edit-request-hasuser="<%= userEmailSet.has(r.email) ? 'yes' : 'no' %>"
+                        title="Edit request"
+                      >
+                        Edit
                       </button>
-                    </form>
-                    <% } %>
-                    <button
-                      type="button"
-                      class="edit-pill"
-                      data-edit-request-id="<%= r.id %>"
-                      data-edit-request-email="<%= r.email %>"
-                      data-edit-request-firstname="<%= r.first_name %>"
-                      data-edit-request-lastname="<%= r.last_name %>"
-                      data-edit-request-organization="<%= r.organization || '' %>"
-                      data-edit-request-message="<%= r.message || '' %>"
-                      data-edit-request-hasuser="<%= userEmailSet.has(r.email) ? 'yes' : 'no' %>"
-                      title="Edit request"
-                      style="margin-right:4px;"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      class="delete-pill"
-                      data-delete-request-id="<%= r.id %>"
-                      data-delete-request-email="<%= r.email %>"
-                      data-delete-request-name="<%= r.first_name %> <%= r.last_name %>"
-                      title="Delete request"
-                    >
-                      Delete
-                    </button>
+                      <button
+                        type="button"
+                        class="delete-pill"
+                        data-delete-request-id="<%= r.id %>"
+                        data-delete-request-email="<%= r.email %>"
+                        data-delete-request-name="<%= r.first_name %> <%= r.last_name %>"
+                        title="Delete request"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
                 <% }); %>

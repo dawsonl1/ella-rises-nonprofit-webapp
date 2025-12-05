@@ -170,9 +170,10 @@ router.post('/csv-upload', ensureAuthenticated, ensureManager, upload.single('cs
     console.log('--- Upload started ---');
     console.log('[upload] Received file', { originalname: req.file.originalname, size: req.file.size, path: filePath });
     
-    // Step 1: Clear normalized staging tables to show only new upload data
-    // These tables track what was added in this specific upload
-    console.log('[upload] Clearing normalized staging tables');
+    // Step 1: Clear all staging tables to ensure clean upload
+    // This includes the raw staging table and normalized staging tables
+    console.log('[upload] Clearing all staging tables');
+    await knex('stagingrawsurvey').truncate();
     await knex('staging_personinfo').truncate();
     await knex('staging_donations').truncate();
     await knex('staging_participantmilestones').truncate();
@@ -180,7 +181,7 @@ router.post('/csv-upload', ensureAuthenticated, ensureManager, upload.single('cs
     await knex('staging_eventinstances').truncate();
     await knex('staging_participantattendanceinstances').truncate();
     await knex('staging_surveyinstances').truncate();
-    console.log('[upload] Normalized staging tables cleared');
+    console.log('[upload] All staging tables cleared');
     
     // Step 2: Parse CSV file and read all rows into memory
     await new Promise((resolve, reject) => {
